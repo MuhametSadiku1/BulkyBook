@@ -1146,3 +1146,5 @@ C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\obj\Debug\net6.0\refint\Bul
 C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\obj\Debug\net6.0\BulkyBookWeb.pdb
 C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\obj\Debug\net6.0\BulkyBookWeb.genruntimeconfig.cache
 C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\obj\Debug\net6.0\ref\BulkyBookWeb.dll
+C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\bin\Debug\net6.0\BulkyBook.Utility.dll
+C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\bin\Debug\net6.0\BulkyBook.Utility.pdb
