@@ -10,12 +10,12 @@ function loadDataTable() {
             "url":"/Admin/Order/GetAll"
         },
         "columns": [
-            { "data": "id", "width": "15%" },
-            { "data": "name", "width": "15%" },
+            { "data": "id", "width": "5%" },
+            { "data": "name", "width": "25%" },
             { "data": "phoneNumber", "width": "15%" },
             { "data": "applicationUser.email", "width": "15%" },
             { "data": "orderStatus", "width": "15%" },
-            { "data": "orderTotal", "width": "15%" },
+            { "data": "orderTotal", "width": "10%" },
             {
                 "data": "id",
                 "render": function (data) {
@@ -27,7 +27,7 @@ function loadDataTable() {
                         </div>
                     `
                 },
-                "width": "15%"
+                "width": "5%"
             }
         ]
     });
