@@ -22,7 +22,7 @@ namespace BulkyBook.DataAccess.Repository
 			_db.OrderHeaders.Update(orderHeader);
 		}
 
-		public void UpdateStatus(int id, string orderStatus, string? paymentStatus)
+		public void UpdateStatus(int id, string orderStatus, string? paymentStatus = null)
 		{
 			var orderFromDb = _db.OrderHeaders.FirstOrDefault(u => u.Id == id);
 			if(orderFromDb != null)
@@ -33,6 +33,14 @@ namespace BulkyBook.DataAccess.Repository
 					orderFromDb.PaymentStatus = paymentStatus;
 				}
 			}
+		}
+
+		public void UpdateStripePaymentID(int id, string sessionId, string paymentIntentId)
+		{
+			var orderFromDb = _db.OrderHeaders.FirstOrDefault(u => u.Id == id);
+
+			orderFromDb.SessionId = sessionId;
+			orderFromDb.PaymentIntentId = paymentIntentId;
 		}
 	}
 }
