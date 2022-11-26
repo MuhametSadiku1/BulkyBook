@@ -104,7 +104,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 
 			ApplicationUser applicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Id == claim.Value);
 
-			if (applicationUser.CompanyId.GetValueOrDefault() == null)
+			if (applicationUser.CompanyId.GetValueOrDefault() == 0)
 			{
 				ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
 				ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
@@ -131,7 +131,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 				_unitOfWork.Save();
 			}
 
-			if (applicationUser.CompanyId.GetValueOrDefault() == null)
+			if (applicationUser.CompanyId.GetValueOrDefault() == 0)
 			{
 				//Stripe Settings
 				var domain = "https://localhost:44327/";
