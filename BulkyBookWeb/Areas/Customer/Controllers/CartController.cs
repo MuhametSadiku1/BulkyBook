@@ -112,7 +112,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 			else
 			{
 				ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
-				ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
+				ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusInProcess;
 			}
 
 			_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
