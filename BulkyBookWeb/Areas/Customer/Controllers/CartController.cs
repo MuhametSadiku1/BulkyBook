@@ -3,6 +3,7 @@ using BulkyBook.Models;
 using BulkyBook.Models.ViewModels;
 using BulkyBook.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 using System.Security.Claims;
@@ -14,15 +15,17 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 	public class CartController : Controller
 	{
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IEmailSender _emailSender;
 
 		[BindProperty]
 		public ShoppingCartVM ShoppingCartVM { get; set; }
 
 		public int OrderTotal { get; set; }
 
-		public CartController(IUnitOfWork unitOfWork)
+		public CartController(IUnitOfWork unitOfWork, IEmailSender emailSender)
 		{
 			_unitOfWork = unitOfWork;
+			_emailSender = emailSender;
 		}
 
 		public IActionResult Index()
@@ -178,7 +181,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 
 		public IActionResult OrderConfirmation(int id)
 		{
-			OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id);
+			OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id, includeProperties: "ApplicationUser");
 			if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
 			{
 				var service = new SessionService();
@@ -191,6 +194,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 				}
 			}
 
+			_emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order - BulkyBook", "<p>New Order Created</p>");
 			List<ShoppingCard> shoppingCards = _unitOfWork.ShoppingCard.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
 			_unitOfWork.ShoppingCard.RemoveRange(shoppingCards);
 			_unitOfWork.Save();
@@ -212,7 +216,9 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 			if (cart.Count <= 1)
 			{
 				_unitOfWork.ShoppingCard.Remove(cart);
-			}
+                var count = _unitOfWork.ShoppingCard.GetAll(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count - 1;
+                HttpContext.Session.SetInt32(SD.SessionCart, count);
+            }
 			else
 			{
 				_unitOfWork.ShoppingCard.DecrementCount(cart, 1);
@@ -227,6 +233,10 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 			var cart = _unitOfWork.ShoppingCard.GetFirstOrDefault(u => u.Id == cartId);
 			_unitOfWork.ShoppingCard.Remove(cart);
 			_unitOfWork.Save();
+
+			var count = _unitOfWork.ShoppingCard.GetAll(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
+			HttpContext.Session.SetInt32(SD.SessionCart, count);
+
 			return RedirectToAction(nameof(Index));
 		}
 
