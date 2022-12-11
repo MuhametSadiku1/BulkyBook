@@ -1152,3 +1152,4 @@ C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\bin\Debug\net6.0\Stripe.net
 C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\bin\Debug\net6.0\MailKit.dll
 C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\bin\Debug\net6.0\MimeKit.dll
 C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+C:\Users\TECHCOM\Desktop\Course Project\BulkyBookWeb\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.Facebook.dll
